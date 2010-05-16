@@ -1,9 +1,9 @@
 
-package Algo;
+package algo;
 
-import Graph.Edge;
-import Graph.Node;
-import Graph.list.DisjointSet;
+import graph.Edge;
+import graph.Node;
+import graph.collection.DisjointSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

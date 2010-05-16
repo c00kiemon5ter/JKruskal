@@ -1,5 +1,5 @@
 
-package Graph.list;
+package graph.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;

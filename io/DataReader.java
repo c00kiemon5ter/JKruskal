@@ -1,7 +1,7 @@
 
-package IO;
+package io;
 
-import Graph.Node;
+import graph.Node;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

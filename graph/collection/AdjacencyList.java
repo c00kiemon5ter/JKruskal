@@ -1,8 +1,8 @@
 
-package Graph.list;
+package graph.collection;
 
-import Graph.Edge;
-import Graph.Node;
+import graph.Edge;
+import graph.Node;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
