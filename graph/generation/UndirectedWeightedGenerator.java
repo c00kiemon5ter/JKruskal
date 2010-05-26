@@ -27,10 +27,12 @@ public class UndirectedWeightedGenerator implements Generator<WeightedGraph<Node
 	}
 
 	public WeightedGraph<Node, DefaultWeightedEdge> generateSingleGraph(GeneratorGraphType gentype, int graphSize) {
+                //we need a full graph to create the square and the ring graphs
+                GraphGenerator<Node, DefaultWeightedEdge, Node>fullGraph = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
 		switch (gentype) {
 			case RANDOM_WEIGHT_COMPLETE_GRAPH_GENERATOR:
 				// do something
-				graphGen = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
+				graphGen = fullGraph;
 				break;
 			case HOMOGENOUS_POINT_COMPLETE_GRAPH_GENERATOR:
 				// do something else
