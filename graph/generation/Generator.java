@@ -9,7 +9,7 @@ import java.util.List;
  * @author c00kiemon5ter
  */
 public interface Generator<T> {
-	T generateSingleGraph(GeneratorGraphType gentype, int graphSize);
-	List<T> generate(GeneratorGraphType gentype, int graphSize, int numOfGraphs);
+	T generateSingleGraph(int graphSize);
+	List<T> generate(int graphSize, int numOfGraphs);
 	List<T> getGeneratedGraphs();
 }
