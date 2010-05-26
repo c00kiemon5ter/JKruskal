@@ -15,8 +15,8 @@ public class Kruskal {
 		DisjointSet<Node> nodeset = new DisjointSet<Node>();
 		nodeset.createSubsets(nodes);
 		for (Edge e : edges) {
-			if (nodeset.find(e.getFrom()) != nodeset.find(e.getTo())) {
-				nodeset.merge(nodeset.find(e.getFrom()), nodeset.find(e.getTo()));
+			if (nodeset.find(e.getSource()) != nodeset.find(e.getTarget())) {
+				nodeset.merge(nodeset.find(e.getSource()), nodeset.find(e.getTarget()));
 				MST.add(e);
 			}
 		}

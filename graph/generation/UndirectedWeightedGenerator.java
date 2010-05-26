@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import org.jgrapht.WeightedGraph;
 import org.jgrapht.generate.CompleteGraphGenerator;
+import org.jgrapht.generate.GraphGenerator;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.ListenableUndirectedWeightedGraph;
 
@@ -15,20 +17,20 @@ import org.jgrapht.graph.ListenableUndirectedWeightedGraph;
  * @author Periklis Ntanasis
  * @author Ivan c00kiemon5ter Kanakarakis
  */
-public class UndirectedWeightedGenerator implements Generator<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>> {
+public class UndirectedWeightedGenerator implements Generator<WeightedGraph<Node, DefaultWeightedEdge>> {
 	private Random generator;
-	private List<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>> graphList;
-	private CompleteGraphGenerator<Node, DefaultWeightedEdge> cmpltGen;
+	private List<WeightedGraph<Node, DefaultWeightedEdge>> graphList;
+	private GraphGenerator<Node, DefaultWeightedEdge, Node> graphGen;
 
 	public UndirectedWeightedGenerator() {
 		generator = new Random();
 	}
 
-	public ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge> generateSingleGraph(GeneratorGraphType gentype, int graphSize) {
-		cmpltGen = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
+	public WeightedGraph<Node, DefaultWeightedEdge> generateSingleGraph(GeneratorGraphType gentype, int graphSize) {
 		switch (gentype) {
 			case RANDOM_WEIGHT_COMPLETE_GRAPH_GENERATOR:
 				// do something
+				graphGen = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
 				break;
 			case HOMOGENOUS_POINT_COMPLETE_GRAPH_GENERATOR:
 				// do something else
@@ -39,8 +41,8 @@ public class UndirectedWeightedGenerator implements Generator<ListenableUndirect
 			default:
 				throw new IllegalArgumentException("Unexprected Generator Type");
 		}
-		ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge> weightedGraph = new ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-		cmpltGen.generateGraph(weightedGraph, null, null);
+		WeightedGraph<Node, DefaultWeightedEdge> weightedGraph = new ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+		graphGen.generateGraph(weightedGraph, null, null);
 		return weightedGraph;
 	}
 
@@ -53,16 +55,15 @@ public class UndirectedWeightedGenerator implements Generator<ListenableUndirect
 	 *
 	 * Graph Generators: http://www.jgrapht.org/javadoc/org/jgrapht/generate/package-summary.html
 	 */
-	@SuppressWarnings("AssignmentToMethodParameter")
-	public List<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>> generate(GeneratorGraphType gentype, int graphSize, int numOfGraphs) {
-		graphList = new ArrayList<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>>(numOfGraphs);
-		while (numOfGraphs-- > 0) {
+	public List<WeightedGraph<Node, DefaultWeightedEdge>> generate(GeneratorGraphType gentype, int graphSize, int numOfGraphs) {
+		graphList = new ArrayList<WeightedGraph<Node, DefaultWeightedEdge>>(numOfGraphs);
+		for (int i = 0; i < numOfGraphs; i++) {
 			graphList.add(generateSingleGraph(gentype, graphSize));
 		}
 		return Collections.unmodifiableList(graphList);
 	}
 
-	public List<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>> getGeneratedGraphs() {
+	public List<WeightedGraph<Node, DefaultWeightedEdge>> getGeneratedGraphs() {
 		return Collections.unmodifiableList(graphList);
 	}
 
