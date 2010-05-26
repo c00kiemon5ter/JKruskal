@@ -20,7 +20,7 @@ public class AdjacencyList {
 	}
 
 	@SuppressWarnings("CollectionWithoutInitialCapacity")
-	public void addEdge(Node source, Node target, int weight) {
+	public void addEdge(Node source, Node target, double weight) {
 		ArrayList<Edge> list;
 		if (!adjacencies.containsKey(source)) {
 			list = new ArrayList<Edge>();
@@ -36,8 +36,8 @@ public class AdjacencyList {
 	}
 
 	public void reverseEdge(Edge e) {
-		adjacencies.get(e.getFrom()).remove(e);
-		addEdge(e.getTo(), e.getFrom(), e.getWeight());
+		adjacencies.get(e.getSource()).remove(e);
+		addEdge(e.getTarget(), e.getSource(), e.getWeight());
 	}
 
 	public void reverseGraph() {
@@ -48,7 +48,7 @@ public class AdjacencyList {
 		AdjacencyList newlist = new AdjacencyList();
 		for (ArrayList<Edge> edges : adjacencies.values()) {
 			for (Edge e : edges) {
-				newlist.addEdge(e.getTo(), e.getFrom(), e.getWeight());
+				newlist.addEdge(e.getTarget(), e.getSource(), e.getWeight());
 			}
 		}
 		return newlist;

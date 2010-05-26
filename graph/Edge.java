@@ -1,43 +1,57 @@
 
 package graph;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 /**
  *
  * @author  Ivan Kanakarakis
  */
-public class Edge implements Comparable<Edge> {
-	private final Node from, to;
-	private final int weight;
+public class Edge extends DefaultWeightedEdge implements Comparable<Edge> {
+	private final Node source, target;
+	private final double weight;
 
-	public Edge(final Node argFrom, final Node argTo, final int argWeight) {
-		from = argFrom;
-		to = argTo;
-		weight = argWeight;
+	public Edge(final Node source, final Node target, final double weight) {
+		super();
+		this.source = source;
+		this.target = target;
+		this.weight = weight;
 	}
 
-	public int compareTo(final Edge argEdge) {
-		return getWeight() - argEdge.getWeight();
+	public int compareTo(final Edge oEdge) {
+		if (weight - oEdge.getWeight() < 0) {
+			return -1;
+		}
+		if (weight - oEdge.getWeight() > 0) {
+			return 1;
+		}
+		//if (getWeight() - argEdge.getWeight() == 0) {
+		return 0;
+		//}
 	}
 
 	/**
-	 * @return the from
+	 * @return the source
 	 */
-	public Node getFrom() {
-		return from;
+	@Override
+	public Node getSource() {
+		return source;
 	}
 
 	/**
-	 * @return the to
+	 * @return the target
 	 */
-	public Node getTo() {
-		return to;
+	@Override
+	public Node getTarget() {
+		return target;
 	}
 
 	/**
 	 * @return the weight
 	 */
-	public int getWeight() {
-		return weight;
+	@Override
+	public double getWeight() {
+		return super.getWeight();
 	}
 
 }
