@@ -24,19 +24,8 @@ public class UndirectedWeightedGenerator implements Generator<ListenableUndirect
 		generator = new Random();
 	}
 
-	/* NOTE:
-	 * Switching generator type, changes vertex factory behaviour
-	 * The difference between the different type of graphs we have
-	 * to produce is actually the way nodes are assigned in two dimension
-	 * space, and how the weight is calculated
-	 * The generator itself is always a complete graph generator
-	 *
-	 * Graph Generators: http://www.jgrapht.org/javadoc/org/jgrapht/generate/package-summary.html
-	 */
-	@SuppressWarnings("AssignmentToMethodParameter")
-	public List<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>> generate(GeneratorGraphType gentype, int numOfGraphs) {
-		cmpltGen = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(numOfGraphs);
-		graphList = new ArrayList<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>>(numOfGraphs);
+	public ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge> generateSingleGraph(GeneratorGraphType gentype, int graphSize) {
+		cmpltGen = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
 		switch (gentype) {
 			case RANDOM_WEIGHT_COMPLETE_GRAPH_GENERATOR:
 				// do something
@@ -50,11 +39,25 @@ public class UndirectedWeightedGenerator implements Generator<ListenableUndirect
 			default:
 				throw new IllegalArgumentException("Unexprected Generator Type");
 		}
-		ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge> weightedGraph;
+		ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge> weightedGraph = new ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+		cmpltGen.generateGraph(weightedGraph, null, null);
+		return weightedGraph;
+	}
+
+	/* NOTE:
+	 * Switching generator type, changes vertex factory behaviour
+	 * The difference between the different type of graphs we have
+	 * to produce is actually the way nodes are assigned in two dimension
+	 * space, and how the weight is calculated
+	 * The generator itself is always a complete graph generator
+	 *
+	 * Graph Generators: http://www.jgrapht.org/javadoc/org/jgrapht/generate/package-summary.html
+	 */
+	@SuppressWarnings("AssignmentToMethodParameter")
+	public List<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>> generate(GeneratorGraphType gentype, int graphSize, int numOfGraphs) {
+		graphList = new ArrayList<ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>>(numOfGraphs);
 		while (numOfGraphs-- > 0) {
-			weightedGraph = new ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-			cmpltGen.generateGraph(weightedGraph, null, null);
-			graphList.add(weightedGraph);
+			graphList.add(generateSingleGraph(gentype, graphSize));
 		}
 		return Collections.unmodifiableList(graphList);
 	}
