@@ -2,46 +2,37 @@
 package graph.generation;
 
 import graph.Node;
+import graph.DefaultVertexFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import org.jgrapht.WeightedGraph;
-import org.jgrapht.generate.CompleteGraphGenerator;
 import org.jgrapht.generate.GraphGenerator;
+import org.jgrapht.generate.HyperCubeGraphGenerator;
+import org.jgrapht.graph.ClassBasedVertexFactory;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.ListenableUndirectedWeightedGraph;
 
 /**
- * @deprecated 
+ *
  * @author Periklis Ntanasis
- * @author Ivan c00kiemon5ter Kanakarakis
  */
-public class UndirectedWeightedGenerator implements Generator<WeightedGraph<Node, DefaultWeightedEdge>> {
-	private Random generator;
-	private List<WeightedGraph<Node, DefaultWeightedEdge>> graphList;
+public class SquareGraphGenerator implements Generator<WeightedGraph<Node, DefaultWeightedEdge>> {
 	private GraphGenerator<Node, DefaultWeightedEdge, Node> graphGen;
+	private List<WeightedGraph<Node, DefaultWeightedEdge>> graphList;
 
-	public UndirectedWeightedGenerator() {
-		generator = new Random();
+	public SquareGraphGenerator() {
+		/* Noop */
 	}
 
 	public WeightedGraph<Node, DefaultWeightedEdge> generateSingleGraph(int graphSize) {
-		graphGen = new CompleteGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
+		graphGen = new HyperCubeGraphGenerator<Node, DefaultWeightedEdge>(graphSize);
 		WeightedGraph<Node, DefaultWeightedEdge> weightedGraph = new ListenableUndirectedWeightedGraph<Node, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-		graphGen.generateGraph(weightedGraph, null, null);
+//		graphGen.generateGraph(weightedGraph, new DefaultVertexFactory(), null);
+		graphGen.generateGraph(weightedGraph, new ClassBasedVertexFactory<Node>(Node.class), null);
 		return weightedGraph;
 	}
 
-	/* NOTE:
-	 * Switching generator type, changes vertex factory behaviour
-	 * The difference between the different type of graphs we have
-	 * to produce is actually the way nodes are assigned in two dimension
-	 * space, and how the weight is calculated
-	 * The generator itself is always a complete graph generator
-	 *
-	 * Graph Generators: http://www.jgrapht.org/javadoc/org/jgrapht/generate/package-summary.html
-	 */
 	public List<WeightedGraph<Node, DefaultWeightedEdge>> generate(int graphSize, int numOfGraphs) {
 		graphList = new ArrayList<WeightedGraph<Node, DefaultWeightedEdge>>(numOfGraphs);
 		for (int i = 0; i < numOfGraphs; i++) {

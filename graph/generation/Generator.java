@@ -11,5 +11,4 @@ import java.util.List;
 public interface Generator<T> {
 	T generateSingleGraph(int graphSize);
 	List<T> generate(int graphSize, int numOfGraphs);
-	List<T> getGeneratedGraphs();
 }

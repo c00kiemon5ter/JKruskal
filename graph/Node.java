@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Node implements Comparable<Node> {
 	private final String name;
-	private boolean visited = false;	// used for Kosaraju's algorithm
+	private boolean visited = false;		// used for Kosaraju's algorithm
 	private int lowlink = -1, index = -1;   // used for Tarjan's algorithm
-	private List<Node> neighbors;		// used for BFS algorithm
-	private boolean enqueued;		// used for BFS algorithm
+	private List<Node> neighbors;			// used for BFS algorithm
+	private boolean enqueued;				// used for BFS algorithm
 
 	public Node(final String argName) {
 		name = argName;
