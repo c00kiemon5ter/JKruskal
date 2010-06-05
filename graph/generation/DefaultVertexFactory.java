@@ -1,6 +1,7 @@
 
-package graph;
+package graph.generation;
 
+import graph.Node;
 import org.jgrapht.VertexFactory;
 
 /**
@@ -12,7 +13,7 @@ public class DefaultVertexFactory implements VertexFactory<Node> {
 	private static int count = 0;
 
 	public Node createVertex() {
-		return new Node(String.format("%s-%d", prefix, count++));
+		return new Node(String.format("%s-%d", prefix, ++count));
 	}
 
 }

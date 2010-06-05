@@ -1,8 +1,7 @@
 
-package graph.generation;
+package graph.generation.generators;
 
 import graph.Node;
-import graph.DefaultVertexFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -1,5 +1,5 @@
 
-package graph.generation;
+package graph.generation.generators;
 
 import java.util.List;
 
